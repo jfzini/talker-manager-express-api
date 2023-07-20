@@ -14,7 +14,6 @@ app.get('/', (_request, response) => {
 
 app.use('/talker', talkerRouter);
 
-
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT || '3001'}`);
 });

@@ -1,7 +1,6 @@
 const fs = require('fs/promises');
 const path = require('path');
 
-
 const readFile = async () => {
   try {
     const rawData = await fs.readFile(path.resolve(__dirname, '..', 'talker.json'), 'utf-8');
@@ -11,4 +10,4 @@ const readFile = async () => {
   }
 };
 
-module.exports = {readFile};
+module.exports = { readFile };
