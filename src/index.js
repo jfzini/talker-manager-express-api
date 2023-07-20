@@ -1,4 +1,5 @@
 const express = require('express');
+const talkerRouter = require('./routes/talker.routes');
 
 const app = express();
 app.use(express.json());
@@ -11,6 +12,9 @@ app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
 
+app.use('/talker', talkerRouter);
+
+
 app.listen(PORT, () => {
-  console.log('Online');
+  console.log(`Server running on port ${PORT || '3001'}`);
 });
