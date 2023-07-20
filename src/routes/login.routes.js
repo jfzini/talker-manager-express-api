@@ -1,14 +1,11 @@
 const express = require('express');
 const { generateToken } = require('../utils/tokenUtils');
+const { validateEmail, validatePassword } = require('../middlewares/login.middlewares');
 
 const loginRouter = express.Router();
 
-loginRouter.post('/', (req, res) => {
-  const { email, password } = req.body;
+loginRouter.post('/', validateEmail, validatePassword, (req, res) => {
   const token = generateToken();
-  // if (!email || !password) {
-  //   return res.status(401).json({ message: 'Todos os campos são obrigatórios' })
-  // }
   res.status(200).json({ token });
 });
 
