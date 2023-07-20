@@ -10,4 +10,14 @@ const readFile = async () => {
   }
 };
 
-module.exports = { readFile };
+const writeFile = async (data) => {
+  const currentData = await readFile();
+  const newData = [...currentData, data];
+  try {
+    fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(newData));
+  } catch (err) {
+    console.log(`Erro ao escrever no arquivo: ${err.message}`);
+  }
+};
+
+module.exports = { readFile, writeFile };
