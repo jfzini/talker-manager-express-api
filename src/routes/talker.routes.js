@@ -21,9 +21,7 @@ talkerRouter.get('/search', tokenValidation, async (req, res) => {
 
   const foundTalkers = data.filter(({ name }) => name.toLowerCase().includes(q.toLowerCase()));
 
-  if (foundTalkers.length === 0) {
-    return res.status(200).json([]);
-  }
+  if (foundTalkers.length === 0) return res.status(200).json([]);
   return res.status(200).json(foundTalkers);
 });
 
