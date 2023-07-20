@@ -20,4 +20,19 @@ const writeFile = async (data) => {
   }
 };
 
-module.exports = { readFile, writeFile };
+const updateFile = async (id, updateData) => {
+  const data = await readFile();
+  const talkerIndex = data.findIndex((talker) => talker.id === Number(id));
+  if (talkerIndex === -1) return false;
+
+  data[talkerIndex] = { id: Number(id), ...updateData };
+
+  try {
+    fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(data));
+    return data[talkerIndex];
+  } catch (err) {
+    console.log(`Erro ao escrever no arquivo: ${err.message}`);
+  }
+};
+
+module.exports = { readFile, writeFile, updateFile };
