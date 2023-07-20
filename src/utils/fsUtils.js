@@ -35,4 +35,18 @@ const updateFile = async (id, updateData) => {
   }
 };
 
-module.exports = { readFile, writeFile, updateFile };
+const deleteTalker = async (id) => {
+  const data = await readFile();
+  const talkerIndex = data.findIndex((talker) => talker.id === Number(id));
+  if (talkerIndex === -1) return false;
+
+  data.splice(talkerIndex, 1);
+
+  try {
+    fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(data));
+  } catch (err) {
+    console.log(`Erro ao deletar talker no arquivo: ${err.message}`);
+  }
+};
+
+module.exports = { readFile, writeFile, updateFile, deleteTalker };

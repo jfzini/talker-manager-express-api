@@ -1,5 +1,5 @@
 const express = require('express');
-const { readFile, writeFile, updateFile } = require('../utils/fsUtils');
+const { readFile, writeFile, updateFile, deleteTalker } = require('../utils/fsUtils');
 
 // middlewares
 const { tokenValidation } = require('../middlewares/token.middlewares');
@@ -42,6 +42,12 @@ talkerRouter.put('/:id', validateTalker, async (req, res) => {
     return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
   }
   res.status(200).json(updatedTalker);
+});
+
+talkerRouter.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  deleteTalker(id);
+  res.status(204).end();
 });
 
 module.exports = talkerRouter;
