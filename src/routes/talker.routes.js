@@ -31,8 +31,10 @@ talkerRouter.post(
   validateTalkerTalk,
   async (req, res) => {
     const newTalker = req.body;
+    const currentData = await readFile();
+    newTalker.id = currentData[currentData.length - 1].id + 1;
 
-    await writeFile(newTalker);
+    const newData = await writeFile(newTalker);
     res.status(201).json(newTalker);
   },
 );

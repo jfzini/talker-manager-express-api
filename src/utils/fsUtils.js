@@ -15,6 +15,7 @@ const writeFile = async (data) => {
   const newData = [...currentData, data];
   try {
     fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(newData));
+    return newData;
   } catch (err) {
     console.log(`Erro ao escrever no arquivo: ${err.message}`);
   }

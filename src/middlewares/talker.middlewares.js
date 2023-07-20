@@ -24,19 +24,23 @@ const validateTalkerAge = (req, res, next) => {
 
 const validateTalkerTalk = (req, res, next) => {
   const { talk } = req.body;
+  const dateRegex = /^["']?[0-3][0-9]\/[0-1][0-9]\/20[0-9]{2}["']?$/;
   if (!talk) {
     return res.status(400).json({ message: 'O campo "talk" é obrigatório' });
   }
   if (!talk.watchedAt) {
     return res.status(400).json({ message: 'O campo "watchedAt" é obrigatório' });
   }
-  if (!talk.rate) {
+  if (!dateRegex.test(talk.watchedAt)) {
+    return res.status(400).json({ message: 'O campo "watchedAt" deve ter o formato "dd/mm/aaaa"' });
+  }
+  if (talk.rate === undefined) {
     return res.status(400).json({ message: 'O campo "rate" é obrigatório' });
   }
-  if (parseInt(talk.rate) < 1 || parseInt(talk.rate) > 5) {
+  if (Number.isNaN(talk.rate) || !Number.isInteger(talk.rate) || talk.rate < 1 || talk.rate > 5) {
     return res
       .status(400)
-      .json({ message: 'O campo "rate" deve ser um inteiro entre 1 e 5' });
+      .json({ message: 'O campo "rate" deve ser um número inteiro entre 1 e 5' });
   }
   return next();
 };
