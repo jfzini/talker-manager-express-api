@@ -1,5 +1,6 @@
 const express = require('express');
 const talkerRouter = require('./routes/talker.routes');
+const loginRouter = require('./routes/login.routes');
 
 const app = express();
 app.use(express.json());
@@ -13,6 +14,7 @@ app.get('/', (_request, response) => {
 });
 
 app.use('/talker', talkerRouter);
+app.use('/login', loginRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT || '3001'}`);
