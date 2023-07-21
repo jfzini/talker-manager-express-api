@@ -4,6 +4,8 @@ const { readFile, writeFile, updateFile, deleteTalker } = require('../utils/fsUt
 // middlewares
 const { tokenValidation } = require('../middlewares/token.middlewares');
 const talkerMiddlewares = require('../middlewares/talker.middlewares');
+const { validateRateQuery } = require('../middlewares/search.middlewares');
+const { searchQueryParams } = require('../utils/searchUtils');
 
 const validateTalker = Object.values(talkerMiddlewares);
 
@@ -14,13 +16,12 @@ talkerRouter.get('/', async (req, res) => {
   res.status(200).json(data);
 });
 
-talkerRouter.get('/search', tokenValidation, async (req, res) => {
-  const { q } = req.query;
+talkerRouter.get('/search', tokenValidation, validateRateQuery, async (req, res) => {
+  const { q, rate } = req.query;
   const data = await readFile();
-  if (!q) return res.status(200).json(data);
+  if (!q && !rate) return res.status(200).json(data);
 
-  const foundTalkers = data.filter(({ name }) => name.toLowerCase().includes(q.toLowerCase()));
-
+  const foundTalkers = searchQueryParams(req.query, data);
   if (foundTalkers.length === 0) return res.status(200).json([]);
   return res.status(200).json(foundTalkers);
 });
