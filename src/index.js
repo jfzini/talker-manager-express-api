@@ -1,16 +1,21 @@
 const express = require('express');
+
+// routers
 const talkerRouter = require('./routes/talker.routes');
 const loginRouter = require('./routes/login.routes');
 
+// utils
+const { OK } = require('./utils/statusHTTP');
+
+// app config
 const app = express();
 app.use(express.json());
 
-const HTTP_OK_STATUS = 200;
 const PORT = process.env.PORT || '3001';
 
-// não remova esse endpoint, e para o avaliador funcionar
+// DO NOT REMOVE THIS ENDPOINT AS IT IS NEEDED FOR THE AUTOMATED TESTS
 app.get('/', (_request, response) => {
-  response.status(HTTP_OK_STATUS).send();
+  response.status(OK).send();
 });
 
 app.use('/talker', talkerRouter);
