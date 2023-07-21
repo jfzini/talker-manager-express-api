@@ -1,5 +1,5 @@
-const { readFile } = require('../model/fsModels');
-const model = require('../model/selects');
+const { readFile } = require('../models/fsModels');
+const model = require('../models/selects');
 
 const getAllTalkersDB = async () => {
   const rows = await model.getAllTalkers();

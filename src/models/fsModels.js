@@ -38,18 +38,6 @@ const putFile = async (id, updateData) => {
   }
 };
 
-const patchTalkerRate = async (id, rate) => {
-  try {
-    const data = await readFile();
-    const talker = data.find((person) => person.id === Number(id));
-    talker.talk.rate = rate;
-    const updatedTalker = await putFile(id, talker);
-    return updatedTalker;
-  } catch (err) {
-    console.log(`Erro ao fazer patch de rate no arquivo: ${err.message}`);
-  }
-};
-
 const deleteTalker = async (id) => {
   const data = await readFile();
   const talkerIndex = data.findIndex((talker) => talker.id === Number(id));
@@ -64,4 +52,4 @@ const deleteTalker = async (id) => {
   }
 };
 
-module.exports = { readFile, writeFile, putFile, deleteTalker, patchTalkerRate };
+module.exports = { readFile, writeFile, putFile, deleteTalker };
