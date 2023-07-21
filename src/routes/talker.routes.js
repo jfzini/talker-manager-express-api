@@ -3,11 +3,12 @@ const express = require('express');
 
 // middlewares
 const { tokenValidation } = require('../middlewares/token.middlewares');
+const { validadePatchRate } = require('../middlewares/patch.middlewares');
 const validateTalker = require('../middlewares/talker.middlewares');
 const validateSearch = require('../middlewares/search.middlewares');
 
 // utils
-const { readFile, writeFile, updateFile, deleteTalker } = require('../utils/fsUtils');
+const { readFile, writeFile, putFile, deleteTalker, patchTalkerRate } = require('../utils/fsUtils');
 const { searchQueryParams } = require('../utils/searchUtils');
 
 // talker routes
@@ -47,11 +48,22 @@ talkerRouter.post('/', validateTalker, async (req, res) => {
 talkerRouter.put('/:id', validateTalker, async (req, res) => {
   const { id } = req.params;
   const newTalker = req.body;
-  const updatedTalker = await updateFile(id, newTalker);
+  const updatedTalker = await putFile(id, newTalker);
   if (!updatedTalker) {
     return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
   }
   res.status(200).json(updatedTalker);
+});
+
+talkerRouter.patch('/rate/:id', validadePatchRate, async (req, res) => {
+  const { id } = req.params;
+  const { rate } = req.body;
+
+  const updatedTalker = await patchTalkerRate(id, rate);
+  if (!updatedTalker) {
+    return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  }
+  res.status(204).end();
 });
 
 talkerRouter.delete('/:id', async (req, res) => {

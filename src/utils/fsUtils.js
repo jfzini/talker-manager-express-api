@@ -14,24 +14,39 @@ const writeFile = async (data) => {
   const currentData = await readFile();
   const newData = [...currentData, data];
   try {
-    await fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(newData));
+    await fs.writeFile(
+      path.resolve(__dirname, '..', 'talker.json'),
+      JSON.stringify(newData, null, 2),
+    );
   } catch (err) {
     console.log(`Erro ao escrever no arquivo: ${err.message}`);
   }
 };
 
-const updateFile = async (id, updateData) => {
+const putFile = async (id, updateData) => {
   const data = await readFile();
   const talkerIndex = data.findIndex((talker) => talker.id === Number(id));
   if (talkerIndex === -1) return false;
 
-  data[talkerIndex] = { id: Number(id), ...updateData };
+  data[talkerIndex] = { ...data[talkerIndex], ...updateData };
 
   try {
-    await fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(data));
+    await fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(data, null, 2));
     return data[talkerIndex];
   } catch (err) {
     console.log(`Erro ao escrever no arquivo: ${err.message}`);
+  }
+};
+
+const patchTalkerRate = async (id, rate) => {
+  try {
+    const data = await readFile();
+    const talker = data.find((person) => person.id === Number(id));
+    talker.talk.rate = rate;
+    const updatedTalker = await putFile(id, talker);
+    return updatedTalker;
+  } catch (error) {
+    console.log(`Erro ao fazer patch de rate no arquivo: ${error.message}`);
   }
 };
 
@@ -49,4 +64,4 @@ const deleteTalker = async (id) => {
   }
 };
 
-module.exports = { readFile, writeFile, updateFile, deleteTalker };
+module.exports = { readFile, writeFile, putFile, deleteTalker, patchTalkerRate };
