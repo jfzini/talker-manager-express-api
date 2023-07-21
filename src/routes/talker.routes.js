@@ -9,37 +9,24 @@ const validateSearch = require('../middlewares/search.middlewares');
 
 // utils
 const { readFile, writeFile, putFile, deleteTalker, patchTalkerRate } = require('../utils/fsUtils');
-const { searchQueryParams } = require('../utils/searchUtils');
-const { selectAll } = require('../database/selects');
 const { OK, NOT_FOUND, CREATED, NO_CONTENT } = require('../utils/statusHTTP');
+const {
+  getAllTalkersDB,
+  getAllTalkersJSON,
+  searchTalkers,
+  getTalkerById,
+} = require('../controllers/getTalkers');
 
 // talker routes
 const talkerRouter = express.Router();
 
-talkerRouter.get('/', async (req, res) => {
-  const data = await readFile();
-  res.status(OK).json(data);
-});
+talkerRouter.get('/', getAllTalkersJSON);
 
-talkerRouter.get('/db', async (req, res) => {
-  const data = await selectAll();
-  res.status(OK).json(data);
-});
+talkerRouter.get('/db', getAllTalkersDB);
 
-talkerRouter.get('/search', tokenValidation, validateSearch, async (req, res) => {
-  const data = await readFile();
-  const foundTalkers = searchQueryParams(req.query, data);
-  return res.status(OK).json(foundTalkers);
-});
+talkerRouter.get('/search', tokenValidation, validateSearch, searchTalkers);
 
-talkerRouter.get('/:id', async (req, res) => {
-  const data = await readFile();
-  const { id } = req.params;
-  const talker = data.find((person) => person.id === Number(id));
-  if (talker) return res.status(OK).json(talker);
-
-  return res.status(NOT_FOUND).json({ message: 'Pessoa palestrante não encontrada' });
-});
+talkerRouter.get('/:id', getTalkerById);
 
 // apply token validation to all routes below
 talkerRouter.use(tokenValidation);
