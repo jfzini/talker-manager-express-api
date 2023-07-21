@@ -22,4 +22,4 @@ const validateDateQuery = (req, res, next) => {
   return next();
 };
 
-module.exports = [ validateRateQuery, validateDateQuery ];
+module.exports = [validateRateQuery, validateDateQuery];

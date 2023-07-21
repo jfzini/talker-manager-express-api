@@ -22,4 +22,4 @@ const validatePassword = (req, res, next) => {
   return next();
 };
 
-module.exports = [ validateEmail, validatePassword ];
+module.exports = [validateEmail, validatePassword];
