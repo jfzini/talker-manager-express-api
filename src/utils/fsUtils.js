@@ -45,8 +45,8 @@ const patchTalkerRate = async (id, rate) => {
     talker.talk.rate = rate;
     const updatedTalker = await putFile(id, talker);
     return updatedTalker;
-  } catch (error) {
-    console.log(`Erro ao fazer patch de rate no arquivo: ${error.message}`);
+  } catch (err) {
+    console.log(`Erro ao fazer patch de rate no arquivo: ${err.message}`);
   }
 };
 
@@ -58,7 +58,7 @@ const deleteTalker = async (id) => {
   data.splice(talkerIndex, 1);
 
   try {
-    await fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(data));
+    await fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(data, null, 2));
   } catch (err) {
     console.log(`Erro ao deletar talker no arquivo: ${err.message}`);
   }

@@ -41,6 +41,7 @@ talkerRouter.get('/:id', async (req, res) => {
   return res.status(NOT_FOUND).json({ message: 'Pessoa palestrante não encontrada' });
 });
 
+// apply token validation to all routes below
 talkerRouter.use(tokenValidation);
 
 talkerRouter.post('/', validateTalker, async (req, res) => {
