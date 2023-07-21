@@ -10,12 +10,18 @@ const validateSearch = require('../middlewares/search.middlewares');
 // utils
 const { readFile, writeFile, putFile, deleteTalker, patchTalkerRate } = require('../utils/fsUtils');
 const { searchQueryParams } = require('../utils/searchUtils');
+const { selectAll } = require('../database/selects');
 
 // talker routes
 const talkerRouter = express.Router();
 
 talkerRouter.get('/', async (req, res) => {
   const data = await readFile();
+  res.status(200).json(data);
+});
+
+talkerRouter.get('/db', async (req, res) => {
+  const data = await selectAll();
   res.status(200).json(data);
 });
 
