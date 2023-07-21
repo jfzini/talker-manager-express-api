@@ -58,10 +58,10 @@ const validateTalkerRate = (req, res, next) => {
   return next();
 };
 
-module.exports = {
+module.exports = [
   validateTalkerName,
   validateTalkerAge,
   validateTalkerTalk,
   validateTalkerWatchedAt,
   validateTalkerRate,
-};
+];

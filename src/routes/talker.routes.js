@@ -1,14 +1,16 @@
+// modules
 const express = require('express');
-const { readFile, writeFile, updateFile, deleteTalker } = require('../utils/fsUtils');
 
 // middlewares
 const { tokenValidation } = require('../middlewares/token.middlewares');
-const talkerMiddlewares = require('../middlewares/talker.middlewares');
-const { validateRateQuery } = require('../middlewares/search.middlewares');
+const validateTalker = require('../middlewares/talker.middlewares');
+const validateSearch = require('../middlewares/search.middlewares');
+
+// utils
+const { readFile, writeFile, updateFile, deleteTalker } = require('../utils/fsUtils');
 const { searchQueryParams } = require('../utils/searchUtils');
 
-const validateTalker = Object.values(talkerMiddlewares);
-
+// talker routes
 const talkerRouter = express.Router();
 
 talkerRouter.get('/', async (req, res) => {
@@ -16,13 +18,9 @@ talkerRouter.get('/', async (req, res) => {
   res.status(200).json(data);
 });
 
-talkerRouter.get('/search', tokenValidation, validateRateQuery, async (req, res) => {
-  const { q, rate } = req.query;
+talkerRouter.get('/search', tokenValidation, validateSearch, async (req, res) => {
   const data = await readFile();
-  if (!q && !rate) return res.status(200).json(data);
-
   const foundTalkers = searchQueryParams(req.query, data);
-  if (foundTalkers.length === 0) return res.status(200).json([]);
   return res.status(200).json(foundTalkers);
 });
 

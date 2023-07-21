@@ -11,4 +11,15 @@ const validateRateQuery = (req, res, next) => {
   return next();
 };
 
-module.exports = { validateRateQuery };
+const validateDateQuery = (req, res, next) => {
+  const { date } = req.query;
+  if (!date) return next();
+
+  const dateRegex = /^["']?[0-3][0-9]\/[0-1][0-9]\/20[0-9]{2}["']?$/;
+  if (!dateRegex.test(date)) {
+    return res.status(400).json({ message: 'O parâmetro "date" deve ter o formato "dd/mm/aaaa"' });
+  }
+  return next();
+};
+
+module.exports = [ validateRateQuery, validateDateQuery ];
