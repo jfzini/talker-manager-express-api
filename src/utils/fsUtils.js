@@ -14,7 +14,7 @@ const writeFile = async (data) => {
   const currentData = await readFile();
   const newData = [...currentData, data];
   try {
-    fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(newData));
+    await fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(newData));
   } catch (err) {
     console.log(`Erro ao escrever no arquivo: ${err.message}`);
   }
@@ -28,7 +28,7 @@ const updateFile = async (id, updateData) => {
   data[talkerIndex] = { id: Number(id), ...updateData };
 
   try {
-    fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(data));
+    await fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(data));
     return data[talkerIndex];
   } catch (err) {
     console.log(`Erro ao escrever no arquivo: ${err.message}`);
@@ -43,7 +43,7 @@ const deleteTalker = async (id) => {
   data.splice(talkerIndex, 1);
 
   try {
-    fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(data));
+    await fs.writeFile(path.resolve(__dirname, '..', 'talker.json'), JSON.stringify(data));
   } catch (err) {
     console.log(`Erro ao deletar talker no arquivo: ${err.message}`);
   }

@@ -58,7 +58,7 @@ talkerRouter.put('/:id', validateTalker, async (req, res) => {
 
 talkerRouter.delete('/:id', async (req, res) => {
   const { id } = req.params;
-  deleteTalker(id);
+  await deleteTalker(id);
   res.status(204).end();
 });
 
