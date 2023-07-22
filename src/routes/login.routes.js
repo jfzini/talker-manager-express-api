@@ -4,16 +4,13 @@ const express = require('express');
 // middlewares
 const validateLogin = require('../middlewares/login.middlewares');
 
-// utils
-const { generateToken } = require('../utils/tokenUtils');
-const { OK } = require('../utils/statusHTTP');
+// controllers
+const { postLogin } = require('../controllers/postLogin');
 
-// login routes
+// =======================================================================================
+
 const loginRouter = express.Router();
 
-loginRouter.post('/', validateLogin, (req, res) => {
-  const token = generateToken();
-  res.status(OK).json({ token });
-});
+loginRouter.post('/', validateLogin, postLogin);
 
 module.exports = loginRouter;
