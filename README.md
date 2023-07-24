@@ -1,16 +1,3 @@
-### Rodando o projeto com Docker
-Para rodar o projeto utilizando docker, no diretório da aplicação execute o comando:
-
-`docker-compose up -d`
-
-`docker exec -it talker_manager bash`
-
-Para iniciar o servidor com nodemon
-
-`npm run dev`
-
-___
-
 O projeto foi criado para colocar em prática a criação de uma API de palestrantes, permitindo a criação, leitura, atualização e destruição (CRUD) dos dados. Para tanto foi utilizado tanto um arquivo estático `.json` quanto um banco de dados relacional `MySQL`.
 
 ## 🧑‍💻 Habilidades Desenvolvidas
@@ -76,3 +63,16 @@ O resultado na arquitetura do código foi o seguinte:
   * MYSQL
 
   * Docker
+
+___
+
+## 🐋 Rodando o projeto com Docker
+Para rodar o projeto utilizando docker, no diretório da aplicação execute o comando:
+
+`docker-compose up -d`
+
+`docker exec -it talker_manager bash`
+
+Para iniciar o servidor com nodemon
+
+`npm run dev`
