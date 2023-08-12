@@ -9,7 +9,8 @@
     "restore": "cp __tests__/seed.json src/talker.json",
     "start": "node src/index.js",
     "dev": "nodemon --ignore 'src/talker.json' --inspect=0.0.0.0:9229 src/index.js",
-    "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."
+    "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json .",
+    "coisa": "echo 'coisa'"
   },
   "keywords": [],
   "author": "",
